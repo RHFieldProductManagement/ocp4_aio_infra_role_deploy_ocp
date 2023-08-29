@@ -1,8 +1,7 @@
 
 - name: Get a list of all running VM's
-  virt:
-    command: list_vms
-    state: running
+- name: Get list of the running VMs
+  ansible.builtin.command: virsh list --name
   register: running_vm_list
 
 - name: Check if live ISO disk image already exists
@@ -171,7 +170,7 @@
   --noautoconsole --wait=-1'
   with_dict: "{{ vms['sno'] }}"
   register: virt_output
-  when: vm_name not in running_vm_list.list_vms
+  when: vm_name not in running_vm_list.stdout_lines
 
 - name: Add VBMC entries for AI deployments
   ansible.builtin.command: "{{ item }}"
