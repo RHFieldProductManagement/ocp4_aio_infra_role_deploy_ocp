@@ -255,6 +255,8 @@
     --dir=/root/ocp-install/ --log-level=debug
     create cluster
   when: ocp4_aio_deploy_type == "ipi"
+  async: 3600
+  poll: 30
   ignore_errors: true
   register: ipi_install
 
