@@ -109,9 +109,7 @@
 #   tasks:
 
 - name: Power on Bootstrap and Masters for UPI installation
-  virt:
-    name: "{{ item }}"
-    state: running
+  ansible.builtin.command: virsh start {{ item }}
   loop:
     - "ocp4-bootstrap"
     - "ocp4-master1"
@@ -120,9 +118,7 @@
   when: ocp4_aio_deploy_type == "upi"
 
 - name: Power on Workers for UPI installation
-  virt:
-    name: "{{ item }}"
-    state: running
+  ansible.builtin.command: virsh start {{ item }}
   loop:
     - "ocp4-worker1"
     - "ocp4-worker2"
@@ -131,9 +127,7 @@
     - ocp4_aio_deploy_type == "upi"
 
 - name: Power on third worker for UPI installation
-  virt:
-    name: "ocp4-worker3"
-    state: running
+  ansible.builtin.command: virsh start {{ item }}
   when:
     - ocp4_aio_deploy_ocs
     - not ocp4_aio_deploy_compact
@@ -158,9 +152,7 @@
 #   tasks:
 
 - name: Destroy bootstrap machine
-  virt:
-    name: "ocp4-bootstrap"
-    state: destroyed
+  ansible.builtin.command: virsh destroy ocp4-bootstrap
   when:
     - ocp4_aio_deploy_type == "upi"
 
