@@ -1,5 +1,4 @@
 
-- name: Get a list of all running VM's
 - name: Get list of the running VMs
   ansible.builtin.command: virsh list --name
   register: running_vm_list
